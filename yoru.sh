@@ -115,11 +115,10 @@ build_kernel() {
     fi
 
     # Menyiapkan konfigurasi dengan flag sapu jagat
-    make O=out ARCH=arm64 ${TEMP_DEFCONFIG} || {
+    make O=out ARCH=arm64 KCFLAGS="-w" CONFIG_SECTION_MISMATCH_WARN_ONLY=y ${TEMP_DEFCONFIG} || {
         send_telegram_error
         exit 1
     }
-    # KCFLAGS="-w" CONFIG_SECTION_MISMATCH_WARN_ONLY=y
 
     BUILD_START=$(TZ=Asia/Jakarta date +%s)
 
@@ -132,14 +131,13 @@ build_kernel() {
         CC=clang \
         CLANG_TRIPLE=aarch64-linux-gnu- \
         CROSS_COMPILE=aarch64-linux-gnu- \
-        CROSS_COMPILE_ARM32=arm-linux-gnueabi- || {
+        CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+        KCFLAGS="-w" \
+        CONFIG_SECTION_MISMATCH_WARN_ONLY=y || {
             send_telegram_error
             exit 1
         }
         
-        # KCFLAGS="-w" \
-        # CONFIG_SECTION_MISMATCH_WARN_ONLY=y 
-
     BUILD_END=$(TZ=Asia/Jakarta date +%s)
     DIFF=$((BUILD_END - BUILD_START))
     BUILD_TIME="$((DIFF / 60)) min $((DIFF % 60)) sec"
