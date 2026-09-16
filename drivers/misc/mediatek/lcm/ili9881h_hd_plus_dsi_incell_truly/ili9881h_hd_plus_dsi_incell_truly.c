@@ -368,7 +368,7 @@ static void push_table(void *cmdq, struct LCM_setting_table *table,
 
 		default:
 			if (lcm_util.dsi_set_cmdq_V22)
-				dsi_set_cmdq_V22(cmdq, cmd, table[i].count, table[i].para_list, force_update);
+				lcm_util.dsi_set_cmdq_V22(cmdq, cmd, table[i].count, table[i].para_list, force_update);
 		}
 	}
 }
