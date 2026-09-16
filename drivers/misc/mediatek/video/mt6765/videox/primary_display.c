@@ -102,6 +102,9 @@
 #define TUI_SINGLE_WINDOW_MODE (0)
 #define TUI_MULTIPLE_WINDOW_MODE (1)
 
+extern int ddp_dsi_set_lcm_utils(enum DISP_MODULE_ENUM module,
+	struct LCM_DRIVER *lcm_drv);
+
 #define _DEBUG_DITHER_HANG_
 
 #define FRM_UPDATE_SEQ_CACHE_NUM (DISP_INTERNAL_BUFFER_COUNT+1)
@@ -3797,6 +3800,9 @@ int primary_display_init(char *lcm_name, unsigned int lcm_fps,
 
 	/* update path dst module: for dual dsi */
 	update_primary_intferface_module();
+
+	/* ensure lcm util funcs are initialized before path ops */
+	ddp_dsi_set_lcm_utils(DISP_MODULE_DSI0, pgc->plcm->drv);
 
 	/* Part2: CMDQ */
 	if (use_cmdq) {
