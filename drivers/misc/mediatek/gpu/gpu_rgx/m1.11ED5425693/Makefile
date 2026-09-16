@@ -35,8 +35,9 @@ ccflags-y += \
 	-Wstrict-prototypes \
 	-Wno-unused-parameter \
 	-Wno-sign-compare \
-	-Wno-type-limits \
-	-Wno-error
+    -Wno-type-limits \
+	-Wno-error \
+	-Wno-error=int-conversion
 
 pvrsrvkm-y += \
 	generated/cache_bridge/server_cache_bridge.o \
